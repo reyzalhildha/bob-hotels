@@ -1,0 +1,171 @@
+:root {
+  --primary-background: #000000;
+  --text-black: #14213d;
+  --text-yellow: #fca311;
+  --text-gray: #e5e5e5;
+  --text-white: #ffffff;
+  --desktop: 1024px;
+  --mobile: 580px;
+}
+
+@font-face {
+  font-family: "Delmon";
+  src: url("../fonts/delmon-delicate.regular.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+body {
+  margin: 0;
+  font-family: "Delmon";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+  padding: 0;
+}
+
+.navbar {
+  background: var(--primary-background);
+  padding: 1em 2em;
+  position: sticky;
+  top: 0;
+  z-index: 999;
+  gap: 1em;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.navbar .logo {
+  gap: 1em;
+  display: flex;
+  justify-content: start;
+}
+.navbar .logo img {
+  width: 50px;
+  height: auto;
+  -o-object-fit: contain;
+     object-fit: contain;
+}
+.navbar .nav-list {
+  gap: 1em;
+  display: flex;
+  justify-content: end;
+}
+.navbar .nav-list a {
+  color: var(--text-white);
+  text-decoration: none;
+  transition: transform 300ms ease-in-out;
+  padding: 0.5em 1em;
+  border-radius: 20px;
+  font-weight: bolder;
+}
+.navbar .nav-list a:hover {
+  color: var(--text-gray);
+  transition: transform 300ms ease-in-out;
+}
+.navbar .nav-list .login {
+  background: var(--text-white);
+  -webkit-text-fill-color: var(--text-black);
+}
+.navbar .nav-list .login:hover {
+  background: var(--text-gray);
+  transition: transform 300ms ease-in-out;
+}
+
+.container {
+  padding: 1em 2em;
+}
+
+.home {
+  background-image: linear-gradient(black, gray), url("../img/hotel-background.jpeg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-blend-mode: saturation;
+  height: 80vh;
+  position: relative;
+}
+.home .filter {
+  filter: unset;
+  color: var(--text-white);
+  font-weight: bold;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hotels {
+  padding: 1em 15em;
+}
+.hotels .hotel-list {
+  gap: 1em;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+}
+@media screen and (min-width: 1024px) {
+  .hotels .hotel-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.hotels .hotel-list .card {
+  border: 1px solid;
+  border-color: var(--text-gray);
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.hotels .hotel-list .card:hover {
+  scale: 1.03;
+  scale: 1;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.hotels .hotel-list .card .image-container img {
+  width: 100%;
+  height: 300px;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+.hotels .hotel-list .card .content-container {
+  padding: 1em;
+}
+.hotels .hotel-list .card .content-container .header {
+  gap: 1em;
+  display: flex;
+  justify-content: space-between;
+}
+.hotels .hotel-list .card .content-container .location {
+  gap: 0.5em;
+  display: flex;
+}
+.hotels .hotel-list .card .content-container .feature {
+  display: block;
+}
+.hotels .hotel-list .card .content-container .button {
+  gap: 1em;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+.hotels .hotel-list .card .content-container .button button {
+  width: 100%;
+  background-color: transparent;
+  border: 1px solid;
+  border-color: var(--text-gray);
+  border-radius: 10px;
+  padding: 0.5em 1em;
+  font-weight: bold;
+}
+.hotels .hotel-list .card .content-container .button .booking button {
+  background-color: var(--text-yellow);
+  color: var(--text-black);
+}
+.hotels .hotel-list .card .content-container .button .detail button {
+  background-color: var(--text-gray);
+}/*# sourceMappingURL=main.css.map */

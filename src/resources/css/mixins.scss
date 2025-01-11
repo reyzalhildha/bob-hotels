@@ -1,0 +1,7 @@
+@mixin smooth-transition() {
+    transition: transform 300ms ease-in-out;
+}
+
+@mixin standard-transition() {
+    transition: all .35s cubic-bezier(.25, .8, .25, 1);
+}
