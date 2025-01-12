@@ -4,7 +4,9 @@
   --primary-background: #000000;
   --text-black: #14213d;
   --text-yellow: #fca311;
+  --text-yellow-hover: #f09a0e;
   --text-gray: #e5e5e5;
+  --text-gray-hover: #dfdcdc;
   --text-white: #ffffff;
   --desktop: 1024px;
   --mobile: 580px;
@@ -68,14 +70,16 @@ h6 {
     a {
       color: var(--text-white);
       text-decoration: none;
-      @include smooth-transition;
+      @include standard-transition;
       padding: 0.5em 1em;
       border-radius: 20px;
       font-weight: bolder;
+      display: flex;
+      align-items: center;
 
       &:hover {
         color: var(--text-gray);
-        @include smooth-transition;
+        @include standard-transition;
       }
     }
 
@@ -85,7 +89,7 @@ h6 {
 
       &:hover {
         background: var(--text-gray);
-        @include smooth-transition;
+        @include standard-transition;
       }
     }
   }
@@ -102,13 +106,12 @@ h6 {
 // HOME
 // =========================================================================
 .home {
-  background-image: 
-  linear-gradient(black, gray),url("../img/hotel-background.jpeg");
+  background-image: url("../img/hotel-background-hero.png");
+  // background-image: url("../img/hotel-background.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  background-blend-mode: saturation;
-  height: 80vh;  
+  height: 70vh;
   position: relative;
 
   .filter {
@@ -128,7 +131,26 @@ h6 {
 // HOTELS
 // =========================================================================
 .hotels {
-  padding: 1em 15em;
+  padding: 1em 2em;
+  height: 100vh;
+  margin-bottom: 10em;
+
+  @media screen and (min-width: 1024px) {
+    padding: 1em 15em;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media screen and (min-width: 768px) {
+    padding: 1em 10em;
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  h1 {
+    text-align: center;
+    margin-bottom: 1em;
+    font-size: 40px;
+    letter-spacing: 6px;
+  }
 
   .hotel-list {
     gap: 1em;
@@ -160,15 +182,26 @@ h6 {
 
       .content-container {
         padding: 1em;
+        display: grid;
+        gap: 8px;
 
         .header {
           gap: 1em;
           display: flex;
           justify-content: space-between;
+
+          span {
+            gap: 8px;
+            display: flex;
+          }
+
+          svg {
+            color: var(--text-yellow)
+          }
         }
 
         .location {
-          gap: .5em;
+          gap: 0.5em;
           display: flex;
         }
 
@@ -177,6 +210,7 @@ h6 {
         }
 
         .button {
+          margin-top: 1em;
           gap: 1em;
           display: grid;
           grid-template-columns: repeat(2, 1fr);
@@ -187,20 +221,32 @@ h6 {
             border: 1px solid;
             border-color: var(--text-gray);
             border-radius: 10px;
-            padding: .5em 1em;
+            padding: 0.5em 1em;
             font-weight: bold;
+
+            &:hover {
+              cursor: pointer;
+            }
           }
 
           .booking {
             button {
               background-color: var(--text-yellow);
               color: var(--text-black);
+
+              &:hover {
+                background-color: var(--text-yellow-hover);
+              }
             }
           }
 
           .detail {
             button {
               background-color: var(--text-gray);
+
+              &:hover {
+                background-color: var(--text-gray-hover);
+              }
             }
           }
         }

@@ -4,12 +4,17 @@ export default function Navbar() {
     <>
       <div className="navbar">
         <div className="logo">
-          <img src={Logo} alt="logo"/>
+          <a href="/">
+            <img src={Logo} alt="logo" />
+          </a>
         </div>
         <div className="nav-list">
-          <a href="/">Home</a>
-          <a href="/details">Details</a>
-          <a className="login" href="/login">Login</a>
+          <a className="login" href="/login">
+            Login
+          </a>
+          <a className="login" href="/login">
+            Logout
+          </a>
         </div>
       </div>
     </>

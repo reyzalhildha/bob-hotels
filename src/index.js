@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router";
 
+// import "./index.css";
 import "./resources/css/main.css";
+import 'primereact/resources/themes/lara-light-blue/theme.css';
 
 import Navbar from "./pages/layout/Navbar";
 import Footer from "./pages/layout/Footer";
@@ -11,6 +13,8 @@ import Login from "./pages/content/Login";
 import Home from "./pages/content/Home";
 import HotelDetail from "./pages/content/HotelDetail";
 
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<Index />);
 export default function Index() {
   return (
     <>
@@ -26,9 +30,6 @@ export default function Index() {
     </>
   );
 }
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<Index />);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
