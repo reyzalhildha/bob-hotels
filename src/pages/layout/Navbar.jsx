@@ -1,5 +1,18 @@
+import React, { useState } from "react";
 import Logo from "../../resources/img/logo/logo-hotel.png";
+
+import DialogLogin from "../components/DialogLogin";
+import DialogLogout from "../components/DialogLogout";
+
 export default function Navbar() {
+  const [visibleLogin, setVisibleLogin] = useState(false);
+  const [visibleLogout, setVisibleLogout] = useState(false);
+
+  const handleHideDialog = () => {
+    setVisibleLogin(false);
+    setVisibleLogout(false);
+  };
+
   return (
     <>
       <div className="navbar">
@@ -9,14 +22,24 @@ export default function Navbar() {
           </a>
         </div>
         <div className="nav-list">
-          <a className="login" href="/login">
+          <button
+            className="login"
+            href="/login"
+            onClick={() => setVisibleLogin(true)}>
             Login
-          </a>
-          <a className="login" href="/login">
+          </button>
+          <button
+            className="login"
+            href="/logout"
+            onClick={() => setVisibleLogout(true)}>
             Logout
-          </a>
+          </button>
         </div>
       </div>
+
+      {/* DIALOG */}
+      <DialogLogin visible={visibleLogin} onHide={handleHideDialog} />
+      <DialogLogout visible={visibleLogout} onHide={handleHideDialog} />
     </>
   );
 }

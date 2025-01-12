@@ -34,6 +34,10 @@ h6 {
   padding: 0;
 }
 
+button:hover, a:hover {
+  cursor: pointer;
+}
+
 .navbar {
   background: var(--primary-background);
   padding: 1em 2em;
@@ -60,9 +64,8 @@ h6 {
   display: flex;
   justify-content: end;
 }
-.navbar .nav-list a {
+.navbar .nav-list button {
   color: var(--text-white);
-  text-decoration: none;
   transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0.5em 1em;
   border-radius: 20px;
@@ -70,7 +73,7 @@ h6 {
   display: flex;
   align-items: center;
 }
-.navbar .nav-list a:hover {
+.navbar .nav-list button:hover {
   color: var(--text-gray);
   transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }

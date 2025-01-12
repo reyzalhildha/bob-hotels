@@ -4,8 +4,8 @@ import { createClient } from "@supabase/supabase-js";
 import { FaStar } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { Button } from "primereact/button";
-import DialogLogin from '../components/Dialog';
-
+import DialogLogin from "../components/DialogLogin";
+import DialogDetail from "../components/DialogDetail";
 
 const supabase = createClient(
   "https://npwqsjbhohvyagbxqtkb.supabase.co",
@@ -15,7 +15,6 @@ const supabase = createClient(
 export default function Home() {
   const [countries, setCountries] = useState([]);
   const [visibleLogin, setVisibleLogin] = useState(false);
-  const [visibleLogout, setVisibleLogout] = useState(false);
   const [visibleDetail, setVisibleDetail] = useState(false);
 
   useEffect(() => {
@@ -24,13 +23,18 @@ export default function Home() {
 
   async function getCountries() {
     const { data } = await supabase.from("hotels").select();
-    const filteredData = data.filter(hotel => hotel.status_booking === "READY");
+    const filteredData = data.filter((hotel) => hotel.status_booking === "READY");
     setCountries(filteredData);
     console.log(data);
   }
 
-  const getImg = imgName => {
+  const getImg = (imgName) => {
     return require(`../../resources/img/room/${imgName}.png`);
+  };
+
+  const handleHideDialog = () => {
+    setVisibleLogin(false);
+    setVisibleDetail(false);
   };
 
   return (
@@ -42,8 +46,8 @@ export default function Home() {
       <div className="hotels">
         <h1>Daftar Hotel</h1>
         <div className="hotel-list">
-          {countries.map(country => (
-            <div className="card">
+          {countries.map((country) => (
+            <div className="card" key={country.id}>
               <div className="image-container">
                 <img src={getImg(country.name_img)} alt="hotel" />
               </div>
@@ -63,7 +67,7 @@ export default function Home() {
                 <div className="button">
                   <div className="booking">
                     <Button
-                      label="Booking"
+                      label="Login"
                       icon="pi pi-external-link"
                       onClick={() => setVisibleLogin(true)}
                     />
@@ -83,7 +87,8 @@ export default function Home() {
       </div>
 
       {/* DIALOG */}
-      <DialogLogin visibleLogin={visibleLogin} onClose={true}/>
+      <DialogLogin visible={visibleLogin} onHide={handleHideDialog} />
+      <DialogDetail visible={visibleDetail} onHide={handleHideDialog} />
     </>
   );
 }
