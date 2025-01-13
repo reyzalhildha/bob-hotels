@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter, Routes, Route } from "react-router";
 
-// import "./index.css";
 import "./resources/css/main.css";
-import 'primereact/resources/themes/lara-light-blue/theme.css';
+import "./resources/css/components.css";
+import "primereact/resources/themes/lara-light-blue/theme.css";
 
 import Navbar from "./pages/layout/Navbar";
 import Footer from "./pages/layout/Footer";

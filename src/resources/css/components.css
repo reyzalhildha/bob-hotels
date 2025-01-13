@@ -1,0 +1,49 @@
+.container-dialog {
+  gap: 2em;
+  display: grid;
+}
+.container-dialog .form-group {
+  gap: 2em;
+  display: grid;
+}
+.container-dialog .form-group input {
+  width: 100%;
+}
+.container-dialog .form-group .p-icon-field, .container-dialog .form-group .p-password {
+  width: 100%;
+}
+.container-dialog .form-input {
+  gap: 1em;
+  display: grid;
+}
+.container-dialog .form-button {
+  gap: 1em;
+  display: grid;
+}
+.container-dialog .form-button button {
+  width: 100%;
+  background-color: var(--primary-background);
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.container-dialog .form-button button:hover {
+  color: var(--text-yellow);
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.container-dialog .form-button button .p-button-label, .container-dialog .form-button button span {
+  transition-duration: unset;
+}
+.container-dialog .form-button p {
+  gap: 7px;
+  display: flex;
+  justify-content: center;
+}
+.container-dialog .form-button a {
+  text-decoration: none;
+  color: var(--text-black);
+  font-weight: bold;
+}
+.container-dialog .form-button a:hover {
+  color: var(--text-yellow);
+  text-decoration: underline;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}/*# sourceMappingURL=components.css.map */

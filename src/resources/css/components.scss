@@ -1,0 +1,66 @@
+@import "./mixins.scss";
+
+// =========================================================================
+// DIALOG
+// =========================================================================
+
+.container-dialog {
+    gap: 2em;
+    display: grid;
+
+    .form-group {
+        gap: 2em;
+        display: grid;
+
+        input {
+            width: 100%;
+        }
+
+        .p-icon-field, .p-password {
+            width: 100%;
+        }
+    }
+
+    .form-input {
+        gap: 1em;
+        display: grid;
+    }
+
+    .form-button {
+        gap: 1em;
+        display: grid;
+        
+        button {
+            width: 100%;
+            background-color: var(--primary-background);
+            @include standard-transition;
+
+            &:hover {
+                color: var(--text-yellow);
+                @include standard-transition;
+            }
+
+            .p-button-label, span {
+                transition-duration: unset;
+            }
+        }
+
+        p {
+            gap: 7px;
+            display: flex;
+            justify-content: center;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-black);
+            font-weight: bold;
+
+            &:hover {
+                color: var(--text-yellow);
+                text-decoration: underline;
+                @include standard-transition;
+            }
+        }
+    }
+}
