@@ -6,8 +6,6 @@ import { Password } from "primereact/password";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
 
-import { Typography } from "@material-tailwind/react";
-
 export default function DialogLogin({ visible, onHide }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -73,7 +71,7 @@ export default function DialogLogin({ visible, onHide }) {
             <Button label="Sign In" loading={loading} onClick={load} />
             <p>
               Don't have an account?
-              <a href="#">Sign Up</a>
+              <a href="!#">Sign Up</a>
             </p>
           </div>
         </div>

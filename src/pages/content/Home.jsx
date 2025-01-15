@@ -1,16 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { createClient } from "@supabase/supabase-js";
 
 import { FaStar } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { Button } from "primereact/button";
 import DialogLogin from "../components/DialogLogin";
 import DialogDetail from "../components/DialogDetail";
+import { supabase } from '../../utils/supabase'
 
-const supabase = createClient(
-  "https://npwqsjbhohvyagbxqtkb.supabase.co",
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5wd3FzamJob2h2eWFnYnhxdGtiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY2NTYzODAsImV4cCI6MjA1MjIzMjM4MH0.u2CUtfIDVgKVztbQSk7ZUFCHrxu6XnVldhCHNMQL3sw"
-);
 
 export default function Home() {
   const [countries, setCountries] = useState([]);
