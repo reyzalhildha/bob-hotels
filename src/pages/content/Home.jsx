@@ -12,6 +12,8 @@ export default function Home() {
   const [hotel, setHotels] = useState([]);
   const [visibleLogin, setVisibleLogin] = useState(false);
   const [visibleDetail, setVisibleDetail] = useState(false);
+  const [selectedHotelId, setSelectedHotelId] = useState(null); // State untuk menyimpan hotelId yang dipilih
+  const [bookingStatus, setBookingStatus] = useState(""); // State untuk status booking (untuk menampilkan pesan sukses atau error)
 
   let navigate = useNavigate();
 
@@ -27,16 +29,17 @@ export default function Home() {
     setHotels(data);
   }
 
-  const getImg = imgName => {
+  const getImg = (imgName) => {
     return require(`../../resources/img/room/${imgName}.png`);
   };
 
   const handleHideDialog = () => {
     setVisibleLogin(false);
     setVisibleDetail(false);
+    setBookingStatus(""); // Reset status booking ketika dialog ditutup
   };
 
-  const handleBooking = async () => {
+  const handleBooking = async (hotelId) => {
     const { data, error } = await supabase
       .from("hotel_login")
       .select("status_login")
@@ -48,12 +51,29 @@ export default function Home() {
     }
 
     if (data && data.length > 0) {
-      // Jika ada status_login yang LOGIN
-      setVisibleLogin(true); // Munculkan dialog sukses
+      // Jika ada status_login yang LOGIN, lakukan update status booking
+      const { error: updateError } = await supabase
+        .from("hotels")
+        .update({ status_booking: "BOOKED" })
+        .eq("id", hotelId);
+
+      if (updateError) {
+        console.error("Error updating hotel status:", updateError);
+        setBookingStatus("Gagal memesan hotel. Silakan coba lagi.");
+      } else {
+        setBookingStatus("Hotel berhasil dipesan!");
+        setVisibleLogin(true); // Munculkan dialog sukses setelah booking berhasil
+        getHotels(); // Refresh daftar hotel untuk menampilkan status yang baru
+      }
     } else {
-      // Jika tidak ada yang LOGIN
-      navigate("/login"); // Arahkan ke halaman login
+      // Jika tidak ada yang LOGIN, arahkan ke halaman login
+      navigate("/login");
     }
+  };
+
+  const handleHotelDetail = (id) => {
+    setSelectedHotelId(id); // Set hotelId yang dipilih
+    setVisibleDetail(true); // Tampilkan dialog detail
   };
 
   return (
@@ -65,7 +85,7 @@ export default function Home() {
       <div className="hotels">
         <h1>Daftar Hotel</h1>
         <div className="hotel-list">
-          {hotel.map(country => (
+          {hotel.map((country) => (
             <div className="card" key={country.id}>
               <div className="image-container">
                 <img src={getImg(country.name_img)} alt="hotel" />
@@ -88,14 +108,14 @@ export default function Home() {
                     <Button
                       label="Booking"
                       icon="pi pi-external-link"
-                      onClick={handleBooking}
+                      onClick={() => handleBooking(country.id)} // Pass hotelId saat booking
                     />
                   </div>
                   <div className="detail">
                     <Button
                       label="Detail"
                       icon="pi pi-external-link"
-                      onClick={() => setVisibleDetail(true)}
+                      onClick={() => handleHotelDetail(country.id)} // Kirim hotelId ke handleHotelDetail
                     />
                   </div>
                 </div>
@@ -106,9 +126,13 @@ export default function Home() {
       </div>
 
       {/* DIALOG */}
-      <DialogDetail visible={visibleDetail} onHide={handleHideDialog} />
+      <DialogDetail
+        visible={visibleDetail}
+        onHide={handleHideDialog}
+        hotelId={selectedHotelId} // Kirim hotelId ke DialogDetail
+      />
       <Dialog visible={visibleLogin} onHide={handleHideDialog}>
-        <p>Anda telah berhasil booking hotel.</p>
+        <p>{bookingStatus}</p> {/* Menampilkan status booking */}
       </Dialog>
     </>
   );

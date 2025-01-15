@@ -77,3 +77,15 @@
         }
     }
 }
+
+.hotel-detail-content {
+    gap: 1em;
+    display: grid;
+
+    img {
+        width: 100%;
+        display: grid;
+        justify-content: center;
+        align-items: center;
+    }
+}

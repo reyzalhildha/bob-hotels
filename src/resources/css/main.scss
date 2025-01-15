@@ -278,10 +278,15 @@ button, a {
 
           .detail {
             button {
-              background-color: var(--text-gray);
+              color: var(--text-black);
+              background-color: var(--text-white);
+              border: 1px solid var(--text-black);
 
               &:hover {
-                background-color: var(--text-gray-hover);
+                transition: color .02s;
+                color: var(--text-yellow);
+                background-color: var(--text-white);
+                border: 1px solid var(--text-yellow);
               }
             }
           }

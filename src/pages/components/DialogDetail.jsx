@@ -1,25 +1,70 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import { Dialog } from "primereact/dialog";
+import { supabase } from "../../utils/supabase"; // Pastikan sudah mengimpor supabase
 
-export default function DialogDetail({ visible, onHide }) {
+export default function DialogDetail({ visible, onHide, hotelId }) {
+  const [hotelDetails, setHotelDetails] = useState(null);
+
+  const getImg = imgName => {
+    return require(`../../resources/img/room/${imgName}.png`);
+  };
+
+  // Mengambil data hotel berdasarkan ID
+  useEffect(() => {
+    if (hotelId) {
+      const fetchHotelDetails = async () => {
+        try {
+          const { data, error } = await supabase
+            .from("hotels")
+            .select("*")
+            .eq("id", hotelId)
+            .single(); // Mengambil satu hotel berdasarkan ID
+
+          if (error) {
+            console.error("Error fetching hotel details:", error);
+          } else {
+            setHotelDetails(data);
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error.message);
+        }
+      };
+
+      fetchHotelDetails();
+    }
+  }, [hotelId, visible]);
+
+  // Tampilkan loading atau pesan jika data belum tersedia
+  if (!hotelDetails) {
+    return (
+      <Dialog header="Loading..." visible={visible} onHide={onHide}>
+        Loading hotel details...
+      </Dialog>
+    );
+  }
+
   return (
     <Dialog
-      header="Detail"
+      header={hotelDetails.name_hotel}
       visible={visible}
       draggable={false}
       style={{ width: "50vw" }}
-      onHide={onHide}
-    >
-      <p className="m-0">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
+      onHide={onHide}>
+      <div className="hotel-detail-content">
+        <img
+          src={getImg(hotelDetails.name_img)}
+          alt={hotelDetails.name_hotel}
+        />
+        <div className="hotel-info">
+          <p>
+            <strong>Location:</strong> {hotelDetails.location}
+          </p>
+          <p>
+            <strong>Rating:</strong> {hotelDetails.rating} / 5
+          </p>
+        </div>
+      </div>
     </Dialog>
   );
 }
@@ -27,4 +72,5 @@ export default function DialogDetail({ visible, onHide }) {
 DialogDetail.propTypes = {
   visible: PropTypes.bool.isRequired,
   onHide: PropTypes.func.isRequired,
+  hotelId: PropTypes.number.isRequired, // Menambahkan hotelId sebagai props
 };

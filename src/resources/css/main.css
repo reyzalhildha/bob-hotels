@@ -232,10 +232,15 @@ button:hover, a:hover {
   background-color: var(--text-yellow-hover);
 }
 .hotels .hotel-list .card .content-container .button .detail button {
-  background-color: var(--text-gray);
+  color: var(--text-black);
+  background-color: var(--text-white);
+  border: 1px solid var(--text-black);
 }
 .hotels .hotel-list .card .content-container .button .detail button:hover {
-  background-color: var(--text-gray-hover);
+  transition: color 0.02s;
+  color: var(--text-yellow);
+  background-color: var(--text-white);
+  border: 1px solid var(--text-yellow);
 }
 
 .container-login {

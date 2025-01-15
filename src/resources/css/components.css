@@ -57,4 +57,15 @@
   color: var(--text-yellow);
   text-decoration: underline;
   transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.hotel-detail-content {
+  gap: 1em;
+  display: grid;
+}
+.hotel-detail-content img {
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  align-items: center;
 }/*# sourceMappingURL=components.css.map */
