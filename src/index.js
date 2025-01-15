@@ -10,6 +10,7 @@ import "primereact/resources/themes/lara-light-blue/theme.css";
 import Navbar from "./pages/layout/Navbar";
 import Footer from "./pages/layout/Footer";
 import Login from "./pages/content/Login";
+import SignUp from "./pages/content/SignUp";
 import Home from "./pages/content/Home";
 import HotelDetail from "./pages/content/HotelDetail";
 
@@ -23,6 +24,7 @@ export default function Index() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="login" element={<Login />} />
+          <Route path="signup" element={<SignUp />} />
           <Route path="details" element={<HotelDetail />} />
         </Routes>
       </BrowserRouter>

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { FaStar } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
@@ -12,6 +13,8 @@ export default function Home() {
   const [countries, setCountries] = useState([]);
   const [visibleLogin, setVisibleLogin] = useState(false);
   const [visibleDetail, setVisibleDetail] = useState(false);
+  
+  let navigate = useNavigate(); 
 
   useEffect(() => {
     getCountries();
@@ -63,9 +66,9 @@ export default function Home() {
                 <div className="button">
                   <div className="booking">
                     <Button
-                      label="Login"
+                      label="Booking"
                       icon="pi pi-external-link"
-                      onClick={() => setVisibleLogin(true)}
+                      onClick={() => navigate("/login")}
                     />
                   </div>
                   <div className="detail">

@@ -8,11 +8,22 @@ import { Button } from "primereact/button";
 
 export default function Login() {
   const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [visibleLogout, setVisibleLogout] = useState(false);
 
   let navigate = useNavigate();
+
+  const handleSignUp = () => {
+    setLoading(true);
+
+    // Simulate API request
+    setTimeout(() => {
+      setLoading(false);
+      alert("Account successfully created!");
+    }, 2000);
+  };
 
   const header = <div className="font-bold mb-3">Pick a password</div>;
   const footer = (
@@ -31,17 +42,27 @@ export default function Login() {
   return (
     <>
       <div className="container-login">
-        <h1 className="align-center title">LOGIN</h1>
-        <p>Masukkan email dan kata sandi Anda untuk Masuk.</p>
+        <h1 className="align-center title">REGISTER</h1>
+        <p>Buat akun Anda dengan mengisi informasi di bawah ini.</p>
 
         <div className="form-group">
           <div className="form-input">
             <h4>Username</h4>
             <InputText
               id="username"
-              placeholder="username"
+              placeholder="Username"
               value={username}
               onChange={e => setUsername(e.target.value)}
+            />
+          </div>
+
+          <div className="form-input">
+            <h4>Email</h4>
+            <InputText
+              id="email"
+              placeholder="Email"
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
           </div>
 
@@ -49,22 +70,37 @@ export default function Login() {
             <h4>Password</h4>
             <Password
               inputId="password"
-              placeholder="password"
+              placeholder="Password"
               value={password}
-              onChange={e => setPassword(e.target.value)}
               header={header}
               footer={footer}
+              onChange={e => setPassword(e.target.value)}
+              toggleMask
+            />
+          </div>
+
+          <div className="form-input">
+            <h4>Confirm Password</h4>
+            <Password
+              inputId="confirmPassword"
+              placeholder="Confirm Password"
+              value={confirmPassword}
+              header={header}
+              footer={footer}
+              onChange={e => setConfirmPassword(e.target.value)}
               toggleMask
             />
           </div>
 
           <div className="form-button">
-            <Button label="Sign In" loading={loading} onClick={loading} />
+            <Button
+              label="Sign Up"
+              loading={loading}
+              onClick={handleSignUp}
+              className="mt-2"
+            />
             <p>
-              Don't have an account?{" "}
-              <span className="signup" onClick={() => navigate("/signup")}>
-                Sign Up
-              </span>
+              Already have an account? <span className="signup" onClick={() => navigate("/login")}>Login</span>
             </p>
           </div>
         </div>

@@ -38,6 +38,14 @@ button:hover, a:hover {
   cursor: pointer;
 }
 
+.align-center {
+  text-align: center;
+}
+
+.title {
+  letter-spacing: 6px;
+}
+
 .navbar {
   background: var(--primary-background);
   padding: 1em 2em;
@@ -46,7 +54,7 @@ button:hover, a:hover {
   z-index: 999;
   gap: 1em;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 }
 .navbar .logo {
   gap: 1em;
@@ -59,12 +67,27 @@ button:hover, a:hover {
   -o-object-fit: contain;
      object-fit: contain;
 }
+.navbar .menu {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.navbar .menu a {
+  font-weight: bold;
+  text-decoration: none;
+  color: var(--text-white);
+}
+.navbar .menu a:hover {
+  color: var(--text-yellow);
+  transition: color 0.3s;
+}
 .navbar .nav-list {
   gap: 1em;
   display: flex;
   justify-content: end;
 }
-.navbar .nav-list button {
+.navbar .nav-list a {
+  text-decoration: none;
   color: var(--text-white);
   transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
   padding: 0.5em 1em;
@@ -73,7 +96,7 @@ button:hover, a:hover {
   display: flex;
   align-items: center;
 }
-.navbar .nav-list button:hover {
+.navbar .nav-list a:hover {
   color: var(--text-gray);
   transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
@@ -82,7 +105,7 @@ button:hover, a:hover {
   -webkit-text-fill-color: var(--text-black);
 }
 .navbar .nav-list .login:hover {
-  background: var(--text-gray);
+  -webkit-text-fill-color: var(--text-yellow);
   transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -213,4 +236,66 @@ button:hover, a:hover {
 }
 .hotels .hotel-list .card .content-container .button .detail button:hover {
   background-color: var(--text-gray-hover);
+}
+
+.container-login {
+  gap: 2em;
+  display: grid;
+  padding: 4em 30em;
+}
+.container-login .form-group {
+  gap: 2em;
+  display: grid;
+}
+.container-login .form-group input {
+  width: 100%;
+}
+.container-login .form-group .p-icon-field, .container-login .form-group .p-password {
+  width: 100%;
+}
+.container-login .form-input {
+  gap: 1em;
+  display: grid;
+}
+.container-login .form-button {
+  gap: 1em;
+  display: grid;
+}
+.container-login .form-button button {
+  width: 100%;
+  background-color: var(--primary-background);
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.container-login .form-button button:hover {
+  color: var(--text-yellow);
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.container-login .form-button button .p-button-label, .container-login .form-button button span {
+  transition-duration: unset;
+}
+.container-login .form-button p {
+  gap: 7px;
+  display: flex;
+  justify-content: center;
+}
+.container-login .form-button a {
+  text-decoration: none;
+  color: var(--text-black);
+  font-weight: bold;
+}
+.container-login .form-button a:hover {
+  color: var(--text-yellow);
+  text-decoration: underline;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.container-login .form-button .signup {
+  text-decoration: none;
+  color: var(--text-black);
+  font-weight: bold;
+}
+.container-login .form-button .signup:hover {
+  cursor: pointer;
+  color: var(--text-yellow);
+  text-decoration: underline;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }/*# sourceMappingURL=main.css.map */

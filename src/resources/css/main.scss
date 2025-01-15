@@ -43,6 +43,19 @@ button, a {
   }
 }
 
+
+// =========================================================================
+// GLOBAL CLASS
+// =========================================================================
+.align-center {
+  text-align: center;
+}
+
+.title {
+  letter-spacing: 6px;
+}
+
+
 // =========================================================================
 // NAVBAR
 // =========================================================================
@@ -54,7 +67,7 @@ button, a {
   z-index: 999;
   gap: 1em;
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
 
   .logo {
     gap: 1em;
@@ -68,12 +81,30 @@ button, a {
     }
   }
 
+  .menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    a {
+      font-weight: bold;
+      text-decoration: none;
+      color: var(--text-white);
+
+      &:hover {
+        color: var(--text-yellow);
+        transition: color .3s;
+      }
+    }
+  }
+
   .nav-list {
     gap: 1em;
     display: flex;
     justify-content: end;
 
-    button {
+    a {
+      text-decoration: none;
       color: var(--text-white);
       @include standard-transition;
       padding: 0.5em 1em;
@@ -93,7 +124,7 @@ button, a {
       -webkit-text-fill-color: var(--text-black);
 
       &:hover {
-        background: var(--text-gray);
+        -webkit-text-fill-color: var(--text-yellow);
         @include standard-transition;
       }
     }
@@ -257,5 +288,85 @@ button, a {
         }
       }
     }
+  }
+}
+
+
+// =========================================================================
+// LOGIN
+// =========================================================================
+
+.container-login {
+  gap: 2em;
+  display: grid;
+  padding: 4em 30em;
+
+  .form-group {
+      gap: 2em;
+      display: grid;
+
+      input {
+          width: 100%;
+      }
+
+      .p-icon-field, .p-password {
+          width: 100%;
+      }
+  }
+
+  .form-input {
+      gap: 1em;
+      display: grid;
+  }
+
+  .form-button {
+      gap: 1em;
+      display: grid;
+      
+      button {
+          width: 100%;
+          background-color: var(--primary-background);
+          @include standard-transition;
+
+          &:hover {
+              color: var(--text-yellow);
+              @include standard-transition;
+          }
+
+          .p-button-label, span {
+              transition-duration: unset;
+          }
+      }
+
+      p {
+          gap: 7px;
+          display: flex;
+          justify-content: center;
+      }
+
+      a {
+          text-decoration: none;
+          color: var(--text-black);
+          font-weight: bold;
+
+          &:hover {
+              color: var(--text-yellow);
+              text-decoration: underline;
+              @include standard-transition;
+          }
+      }
+
+      .signup {
+          text-decoration: none;
+          color: var(--text-black);
+          font-weight: bold;
+
+          &:hover {
+              cursor: pointer;
+              color: var(--text-yellow);
+              text-decoration: underline;
+              @include standard-transition;
+          }
+      }
   }
 }

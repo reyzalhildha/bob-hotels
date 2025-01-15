@@ -46,4 +46,15 @@
   color: var(--text-yellow);
   text-decoration: underline;
   transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.container-dialog .form-button .signup {
+  text-decoration: none;
+  color: var(--text-black);
+  font-weight: bold;
+}
+.container-dialog .form-button .signup:hover {
+  cursor: pointer;
+  color: var(--text-yellow);
+  text-decoration: underline;
+  transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
 }/*# sourceMappingURL=components.css.map */

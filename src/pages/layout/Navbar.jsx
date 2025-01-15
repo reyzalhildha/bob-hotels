@@ -21,19 +21,16 @@ export default function Navbar() {
             <img src={Logo} alt="logo" />
           </a>
         </div>
+        <div className="menu">
+          <a href="/">Home</a>
+        </div>
         <div className="nav-list">
-          <button
-            className="login"
-            href="/login"
-            onClick={() => setVisibleLogin(true)}>
+          <a className="login" href="/login">
             Login
-          </button>
-          <button
-            className="login"
-            href="/logout"
-            onClick={() => setVisibleLogout(true)}>
+          </a>
+          <a className="login" href="/logout">
             Logout
-          </button>
+          </a>
         </div>
       </div>
 

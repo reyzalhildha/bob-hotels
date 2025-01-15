@@ -62,5 +62,18 @@
                 @include standard-transition;
             }
         }
+
+        .signup {
+            text-decoration: none;
+            color: var(--text-black);
+            font-weight: bold;
+
+            &:hover {
+                cursor: pointer;
+                color: var(--text-yellow);
+                text-decoration: underline;
+                @include standard-transition;
+            }
+        }
     }
 }
