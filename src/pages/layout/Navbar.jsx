@@ -1,17 +1,51 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { supabase } from "../../utils/supabase";
 import Logo from "../../resources/img/logo/logo-hotel.png";
 
-import DialogLogin from "../components/DialogLogin";
-import DialogLogout from "../components/DialogLogout";
-
 export default function Navbar() {
-  const [visibleLogin, setVisibleLogin] = useState(false);
-  const [visibleLogout, setVisibleLogout] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // Menyimpan status login pengguna
 
-  const handleHideDialog = () => {
-    setVisibleLogin(false);
-    setVisibleLogout(false);
+  // Fungsi untuk menangani logout
+  const handleLogout = async () => {
+    try {
+      // Update status_login menjadi "LOGOUT"
+      const { updateError } = await supabase
+        .from("hotel_login")
+        .update({ status_login: "LOGOUT" })
+        .eq("status_login", "LOGIN");
+
+      if (updateError) {
+        console.error("Error updating status_login:", updateError);
+        alert("Error during logout.");
+      } else {
+        setIsLoggedIn(false); // Set status login ke false
+        alert("You have logged out successfully.");
+      }
+    } catch (error) {
+      console.error("Logout failed:", error.message);
+      alert("An error occurred during logout.");
+    }
   };
+
+  // Cek status login saat komponen dimuat
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      const { data, error } = await supabase
+        .from("hotel_login")
+        .select("*")
+        .eq("status_login", "LOGIN");
+
+      if (error) {
+        console.error("Error checking login status:", error);
+      } else if (data && data.length > 0) {
+        setIsLoggedIn(true); // Ada pengguna dengan status LOGIN
+      } else {
+        setIsLoggedIn(false); // Tidak ada pengguna dengan status LOGIN
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
 
   return (
     <>
@@ -25,18 +59,24 @@ export default function Navbar() {
           <a href="/">Home</a>
         </div>
         <div className="nav-list">
-          <a className="login" href="/login">
-            Login
-          </a>
-          <a className="login" href="/logout">
-            Logout
-          </a>
+          {isLoggedIn ? (
+            <a
+              className="login"
+              href="/logout"
+              onClick={(e) => {
+                e.preventDefault(); // Mencegah navigasi ke /logout
+                handleLogout(); // Menangani logout
+              }}
+            >
+              Logout
+            </a>
+          ) : (
+            <a className="login" href="/login">
+              Login
+            </a>
+          )}
         </div>
       </div>
-
-      {/* DIALOG */}
-      <DialogLogin visible={visibleLogin} onHide={handleHideDialog} />
-      <DialogLogout visible={visibleLogout} onHide={handleHideDialog} />
     </>
   );
 }

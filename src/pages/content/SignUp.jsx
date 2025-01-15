@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../../utils/supabase";
 
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
@@ -15,15 +16,45 @@ export default function Login() {
 
   let navigate = useNavigate();
 
-  const handleSignUp = () => {
+  async function doSignup() {
     setLoading(true);
 
-    // Simulate API request
-    setTimeout(() => {
+    if (confirmPassword !== password) {
+      alert("Password and Confirm Password must be the same!");
       setLoading(false);
-      alert("Account successfully created!");
-    }, 2000);
-  };
+      return;
+    }
+
+    try {
+      const { data, error } = await supabase
+        .from("hotel_login")
+        .insert([
+          {
+            created_at: new Date(),
+            username: username,
+            email: email,
+            password: password,
+            status_login: "LOGIN",
+          },
+        ])
+        .select();
+
+      if (error) {
+        console.error("Error inserting data:", error);
+        alert(`Error creating account: ${error.message}`);
+      } else {
+        alert("Account successfully created!");
+        console.log("Inserted data:", data);
+        // Redirect to login page
+        navigate("/login");
+      }
+    } catch (err) {
+      console.error("Unexpected error:", err);
+      alert("An unexpected error occurred.");
+    } finally {
+      setLoading(false);
+    }
+  }
 
   const header = <div className="font-bold mb-3">Pick a password</div>;
   const footer = (
@@ -52,7 +83,7 @@ export default function Login() {
               id="username"
               placeholder="Username"
               value={username}
-              onChange={e => setUsername(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
 
@@ -62,7 +93,7 @@ export default function Login() {
               id="email"
               placeholder="Email"
               value={email}
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -74,7 +105,7 @@ export default function Login() {
               value={password}
               header={header}
               footer={footer}
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               toggleMask
             />
           </div>
@@ -87,7 +118,7 @@ export default function Login() {
               value={confirmPassword}
               header={header}
               footer={footer}
-              onChange={e => setConfirmPassword(e.target.value)}
+              onChange={(e) => setConfirmPassword(e.target.value)}
               toggleMask
             />
           </div>
@@ -96,11 +127,14 @@ export default function Login() {
             <Button
               label="Sign Up"
               loading={loading}
-              onClick={handleSignUp}
+              onClick={doSignup}
               className="mt-2"
             />
             <p>
-              Already have an account? <span className="signup" onClick={() => navigate("/login")}>Login</span>
+              Already have an account?{" "}
+              <span className="signup" onClick={() => navigate("/login")}>
+                Login
+              </span>
             </p>
           </div>
         </div>

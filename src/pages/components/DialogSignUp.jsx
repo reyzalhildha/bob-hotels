@@ -6,13 +6,13 @@ import { Password } from "primereact/password";
 import { Button } from "primereact/button";
 import DialogLogin from "../components/DialogLogin";
 
-export default function DialogSignUp({ visible, onHide, onSignInClick }) {
+export default function DialogSignUp({ visible, onHide }) {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const [visibleLogin, setVisibleLogin] = useState(false);
+  // const [visibleLogin, setVisibleLogin] = useState(false);
 
   const handleSignUp = () => {
     setLoading(true);
@@ -23,10 +23,6 @@ export default function DialogSignUp({ visible, onHide, onSignInClick }) {
       alert("Account successfully created!");
       onHide(); // Close the dialog after sign-up is complete
     }, 2000);
-  };
-
-  const handleHideDialog = () => {
-    setVisibleLogin(false);
   };
 
   return (
