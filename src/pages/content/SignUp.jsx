@@ -6,21 +6,26 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
 
-export default function Login() {
+export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [dialogVisible, setDialogVisible] = useState(false);
+  const [dialogMessage, setDialogMessage] = useState("");
 
   let navigate = useNavigate();
 
-  async function doSignup() {
+  async function doSignup(event) {
+    event.preventDefault(); // Mencegah reload halaman default
     setLoading(true);
 
-    if (confirmPassword !== password) {
-      alert("Password and Confirm Password must be the same!");
+    if (password !== confirmPassword) {
+      setDialogMessage("Password dan Confirm Password harus sama!");
+      setDialogVisible(true);
       setLoading(false);
       return;
     }
@@ -41,16 +46,22 @@ export default function Login() {
 
       if (error) {
         console.error("Error inserting data:", error);
-        alert(`Error creating account: ${error.message}`);
+        setDialogMessage(`Error membuat akun: ${error.message}`);
+        setDialogVisible(true);
       } else {
-        alert("Account successfully created!");
-        console.log("Inserted data:", data);
-        // Redirect to login page
-        navigate("/login");
+        setDialogMessage("Anda telah berhasil daftar akun!");
+        setDialogVisible(true);
+
+        // Tunggu 2 detik sebelum mengalihkan ke halaman login
+        setTimeout(() => {
+          setDialogVisible(false);
+          navigate("/login");
+        }, 2000);
       }
     } catch (err) {
       console.error("Unexpected error:", err);
-      alert("An unexpected error occurred.");
+      setDialogMessage("Terjadi kesalahan tidak terduga.");
+      setDialogVisible(true);
     } finally {
       setLoading(false);
     }
@@ -76,69 +87,89 @@ export default function Login() {
         <h1 className="align-center title">REGISTER</h1>
         <p>Buat akun Anda dengan mengisi informasi di bawah ini.</p>
 
-        <div className="form-group">
-          <div className="form-input">
-            <h4>Username</h4>
-            <InputText
-              id="username"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </div>
+        <form onSubmit={doSignup}>
+          <div className="form-group">
+            <div className="form-input">
+              <h4>Username</h4>
+              <InputText
+                id="username"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
 
-          <div className="form-input">
-            <h4>Email</h4>
-            <InputText
-              id="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+            <div className="form-input">
+              <h4>Email</h4>
+              <InputText
+                id="email"
+                placeholder="Email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-          <div className="form-input">
-            <h4>Password</h4>
-            <Password
-              inputId="password"
-              placeholder="Password"
-              value={password}
-              header={header}
-              footer={footer}
-              onChange={(e) => setPassword(e.target.value)}
-              toggleMask
-            />
-          </div>
+            <div className="form-input">
+              <h4>Password</h4>
+              <Password
+                inputId="password"
+                placeholder="Password"
+                value={password}
+                header={header}
+                footer={footer}
+                onChange={(e) => setPassword(e.target.value)}
+                toggleMask
+                required
+              />
+            </div>
 
-          <div className="form-input">
-            <h4>Confirm Password</h4>
-            <Password
-              inputId="confirmPassword"
-              placeholder="Confirm Password"
-              value={confirmPassword}
-              header={header}
-              footer={footer}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              toggleMask
-            />
-          </div>
+            <div className="form-input">
+              <h4>Confirm Password</h4>
+              <Password
+                inputId="confirmPassword"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                header={header}
+                footer={footer}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+                toggleMask
+                required
+              />
+            </div>
 
-          <div className="form-button">
-            <Button
-              label="Sign Up"
-              loading={loading}
-              onClick={doSignup}
-              className="mt-2"
-            />
-            <p>
-              Already have an account?{" "}
-              <span className="signup" onClick={() => navigate("/login")}>
-                Login
-              </span>
-            </p>
+            <div className="form-button">
+              <Button
+                label="Sign Up"
+                loading={loading}
+                type="submit"
+                className="mt-2"
+              />
+              <p>
+                Already have an account?{" "}
+                <span className="signup" onClick={() => navigate("/login")}>
+                  Login
+                </span>
+              </p>
+            </div>
           </div>
-        </div>
+        </form>
       </div>
+
+      {/* Dialog untuk menampilkan pesan */}
+      <Dialog
+        visible={dialogVisible}
+        onHide={() => setDialogVisible(false)}
+        modal
+        closable={true}
+        draggable={false}
+        footer={null}
+        className="dialog-status"
+      >
+        <p>{dialogMessage}</p>
+      </Dialog>
     </>
   );
 }

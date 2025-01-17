@@ -1,15 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { supabase } from "../../utils/supabase";
 import Logo from "../../resources/img/logo/logo-hotel.png";
+import { Dialog } from "primereact/dialog";
 
 export default function Navbar() {
   const [isLoggedIn, setIsLoggedIn] = useState(false); // Menyimpan status login pengguna
+  const [dialogVisible, setDialogVisible] = useState(false); // Menyimpan status dialog
+  const [dialogMessage, setDialogMessage] = useState(""); // Menyimpan pesan dialog
 
   // Fungsi untuk menangani logout
   const handleLogout = async () => {
     try {
       // Update status_login menjadi "LOGOUT"
-      const { updateError } = await supabase
+      const { error: updateError } = await supabase
         .from("hotel_login")
         .update({ status_login: "LOGOUT" })
         .eq("status_login", "LOGIN");
@@ -18,8 +21,15 @@ export default function Navbar() {
         console.error("Error updating status_login:", updateError);
         alert("Error during logout.");
       } else {
-        setIsLoggedIn(false); // Set status login ke false
-        alert("You have logged out successfully.");
+        // Tampilkan dialog logout berhasil
+        setDialogMessage("Anda telah berhasil logout.");
+        setDialogVisible(true);
+
+        // Setelah 2 detik, tutup dialog dan set isLoggedIn ke false
+        setTimeout(() => {
+          setDialogVisible(false);
+          setIsLoggedIn(false);
+        }, 2000);
       }
     } catch (error) {
       console.error("Logout failed:", error.message);
@@ -40,7 +50,7 @@ export default function Navbar() {
   // Cek status login saat komponen dimuat
   useEffect(() => {
     refreshPage();
-    
+
     const checkLoginStatus = async () => {
       const { data, error } = await supabase
         .from("hotel_login")
@@ -75,10 +85,11 @@ export default function Navbar() {
             <a
               className="login"
               href="/logout"
-              onClick={e => {
+              onClick={(e) => {
                 e.preventDefault(); // Mencegah navigasi ke /logout
                 handleLogout(); // Menangani logout
-              }}>
+              }}
+            >
               Logout
             </a>
           ) : (
@@ -88,6 +99,18 @@ export default function Navbar() {
           )}
         </div>
       </div>
+
+      {/* Dialog untuk menampilkan pesan logout */}
+      <Dialog
+        visible={dialogVisible}
+        onHide={() => setDialogVisible(false)}
+        modal
+        closable={false}
+        footer={null}
+        className="dialog-status"
+      >
+        <p>{dialogMessage}</p>
+      </Dialog>
     </>
   );
 }
