@@ -6,11 +6,14 @@ import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
 import { Divider } from "primereact/divider";
 import { Button } from "primereact/button";
+import { Dialog } from "primereact/dialog";
 
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [dialogVisible, setDialogVisible] = useState(false); // State untuk dialog
+  const [dialogMessage, setDialogMessage] = useState(""); // Pesan dialog
 
   let navigate = useNavigate();
 
@@ -53,9 +56,16 @@ export default function Login() {
           console.error("Error updating status_login:", updateError);
           alert("Error updating login status.");
         } else {
-          alert("Login successful!");
-          navigate("/"); // Arahkan ke halaman utama setelah login berhasil
-          window.location.reload(); // Refresh halaman setelah login berhasil
+          // Tampilkan dialog berhasil login
+          setDialogMessage("Anda telah berhasil login.");
+          setDialogVisible(true);
+
+          // Setelah 2 detik, tutup dialog dan arahkan ke halaman "/"
+          setTimeout(() => {
+            setDialogVisible(false);
+            navigate("/"); // Arahkan ke halaman utama
+            window.location.reload(); // Refresh halaman
+          }, 2000);
         }
       }
     } catch (error) {
@@ -112,6 +122,17 @@ export default function Login() {
           </div>
         </div>
       </div>
+
+      {/* Dialog untuk menampilkan pesan login */}
+      <Dialog
+        visible={dialogVisible}
+        onHide={() => setDialogVisible(false)}
+        modal
+        closable={false}
+        footer={null}
+        className="dialog-status">
+        <p>{dialogMessage}</p>
+      </Dialog>
     </>
   );
 }
