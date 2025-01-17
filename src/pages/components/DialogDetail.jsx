@@ -63,6 +63,13 @@ export default function DialogDetail({ visible, onHide, hotelId }) {
           <p>
             <strong>Rating:</strong> {hotelDetails.rating} / 5
           </p>
+          <p>
+            <strong>Price:</strong>{" "}
+            {new Intl.NumberFormat("id-ID", {
+              style: "currency",
+              currency: "IDR",
+            }).format(hotelDetails.price)}
+          </p>
         </div>
       </div>
     </Dialog>

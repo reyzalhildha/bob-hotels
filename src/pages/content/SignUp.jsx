@@ -31,7 +31,7 @@ export default function Register() {
     }
 
     try {
-      const { data, error } = await supabase
+      const { error } = await supabase
         .from("hotel_login")
         .insert([
           {

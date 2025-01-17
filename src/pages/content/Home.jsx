@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import { FaStar, FaCheck } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
+import { IoIosPricetags } from "react-icons/io";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
 import DialogDetail from "../components/DialogDetail";
@@ -121,6 +122,10 @@ export default function Home() {
                 <div className="location">
                   <IoLocationOutline />
                   <p>{country.location}</p>
+                </div>
+                <div className="location">
+                  <IoIosPricetags />
+                  <p>{new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(country.price)}</p>
                 </div>
                 <div className="feature"></div>
                 <div className="button">
