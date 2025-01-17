@@ -55,6 +55,7 @@ export default function Login() {
         } else {
           alert("Login successful!");
           navigate("/"); // Arahkan ke halaman utama setelah login berhasil
+          window.location.reload(); // Refresh halaman setelah login berhasil
         }
       }
     } catch (error) {

@@ -1,0 +1,7 @@
+body.dialog-booking .p-dialog-header {
+  display: none;
+}
+body.dialog-booking .p-dialog-content {
+  border-radius: 6px;
+  padding: 2em;
+}/*# sourceMappingURL=override-primereact.css.map */

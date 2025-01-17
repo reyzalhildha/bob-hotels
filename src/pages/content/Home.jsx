@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaCheck } from "react-icons/fa";
 import { IoLocationOutline } from "react-icons/io5";
 import { Button } from "primereact/button";
 import { Dialog } from "primereact/dialog";
@@ -10,10 +10,12 @@ import { supabase } from "../../utils/supabase";
 
 export default function Home() {
   const [hotel, setHotels] = useState([]);
-  const [visibleLogin, setVisibleLogin] = useState(false);
+  const [visibleBooking, setVisibleBooking] = useState(false);
   const [visibleDetail, setVisibleDetail] = useState(false);
-  const [selectedHotelId, setSelectedHotelId] = useState(null); // State untuk menyimpan hotelId yang dipilih
-  const [bookingStatus, setBookingStatus] = useState(""); // State untuk status booking (untuk menampilkan pesan sukses atau error)
+  const [visibleConfirm, setVisibleConfirm] = useState(false); // Dialog konfirmasi booking
+  const [visibleLoginConfirm, setVisibleLoginConfirm] = useState(false); // Dialog konfirmasi login
+  const [selectedHotelId, setSelectedHotelId] = useState(null); // Hotel yang dipilih
+  const [bookingStatus, setBookingStatus] = useState(""); // Status booking
 
   let navigate = useNavigate();
 
@@ -34,12 +36,14 @@ export default function Home() {
   };
 
   const handleHideDialog = () => {
-    setVisibleLogin(false);
+    setVisibleBooking(false);
     setVisibleDetail(false);
-    setBookingStatus(""); // Reset status booking ketika dialog ditutup
+    setVisibleConfirm(false);
+    setVisibleLoginConfirm(false); // Tutup dialog login
+    setBookingStatus(""); // Reset status
   };
 
-  const handleBooking = async (hotelId) => {
+  const handleConfirmBooking = async (hotelId) => {
     const { data, error } = await supabase
       .from("hotel_login")
       .select("status_login")
@@ -51,29 +55,45 @@ export default function Home() {
     }
 
     if (data && data.length > 0) {
-      // Jika ada status_login yang LOGIN, lakukan update status booking
-      const { error: updateError } = await supabase
-        .from("hotels")
-        .update({ status_booking: "BOOKED" })
-        .eq("id", hotelId);
-
-      if (updateError) {
-        console.error("Error updating hotel status:", updateError);
-        setBookingStatus("Gagal memesan hotel. Silakan coba lagi.");
-      } else {
-        setBookingStatus("Hotel berhasil dipesan!");
-        setVisibleLogin(true); // Munculkan dialog sukses setelah booking berhasil
-        getHotels(); // Refresh daftar hotel untuk menampilkan status yang baru
-      }
+      // Jika status LOGIN, tampilkan dialog booking
+      setSelectedHotelId(hotelId);
+      setVisibleConfirm(true);
     } else {
-      // Jika tidak ada yang LOGIN, arahkan ke halaman login
-      navigate("/login");
+      // Jika status LOGOUT, tampilkan dialog login
+      setVisibleLoginConfirm(true);
     }
   };
 
+  const handleBooking = async () => {
+    const { error: updateError } = await supabase
+      .from("hotels")
+      .update({ status_booking: "BOOKED" })
+      .eq("id", selectedHotelId);
+
+    if (updateError) {
+      console.error("Error updating hotel status:", updateError);
+      setBookingStatus("Gagal memesan hotel. Silakan coba lagi.");
+    } else {
+      setBookingStatus("Hotel berhasil dipesan!");
+      setVisibleBooking(true); // Tampilkan dialog sukses
+      getHotels(); // Refresh daftar hotel
+
+      setTimeout(() => {
+        setVisibleBooking(false);
+      }, 2000);
+    }
+
+    setVisibleConfirm(false);
+  };
+
+  const handleLoginRedirect = () => {
+    setVisibleLoginConfirm(false);
+    navigate("/login"); // Alihkan ke halaman login
+  };
+
   const handleHotelDetail = (id) => {
-    setSelectedHotelId(id); // Set hotelId yang dipilih
-    setVisibleDetail(true); // Tampilkan dialog detail
+    setSelectedHotelId(id);
+    setVisibleDetail(true);
   };
 
   return (
@@ -108,14 +128,14 @@ export default function Home() {
                     <Button
                       label="Booking"
                       icon="pi pi-external-link"
-                      onClick={() => handleBooking(country.id)} // Pass hotelId saat booking
+                      onClick={() => handleConfirmBooking(country.id)}
                     />
                   </div>
                   <div className="detail">
                     <Button
                       label="Detail"
                       icon="pi pi-external-link"
-                      onClick={() => handleHotelDetail(country.id)} // Kirim hotelId ke handleHotelDetail
+                      onClick={() => handleHotelDetail(country.id)}
                     />
                   </div>
                 </div>
@@ -125,14 +145,75 @@ export default function Home() {
         </div>
       </div>
 
-      {/* DIALOG */}
+      {/* DIALOG DETAIL */}
       <DialogDetail
         visible={visibleDetail}
         onHide={handleHideDialog}
-        hotelId={selectedHotelId} // Kirim hotelId ke DialogDetail
+        hotelId={selectedHotelId}
       />
-      <Dialog visible={visibleLogin} onHide={handleHideDialog}>
-        <p>{bookingStatus}</p> {/* Menampilkan status booking */}
+
+      {/* DIALOG BOOKING SUCCESS */}
+      <Dialog
+        className="dialog-booking"
+        visible={visibleBooking}
+        onHide={handleHideDialog}
+        modal
+        closable={false}>
+        <FaCheck
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            width: "100%",
+            marginBottom: ".5em",
+            fontSize: "2em",
+            color: "#3b82f6",
+          }}
+        />
+        <p>{bookingStatus}</p>
+      </Dialog>
+
+      {/* DIALOG CONFIRM BOOKING */}
+      <Dialog
+        visible={visibleConfirm}
+        onHide={handleHideDialog}
+        header="Konfirmasi Booking"
+        footer={
+          <div>
+            <Button
+              label="Tidak"
+              className="p-button-text"
+              onClick={handleHideDialog}
+            />
+            <Button
+              label="Ya"
+              className="p-button-primary"
+              onClick={handleBooking}
+            />
+          </div>
+        }>
+        <p>Apakah Anda yakin ingin booking hotel ini?</p>
+      </Dialog>
+
+      {/* DIALOG LOGIN REQUIRED */}
+      <Dialog
+        visible={visibleLoginConfirm}
+        onHide={handleHideDialog}
+        header="Login Diperlukan"
+        footer={
+          <div>
+            <Button
+              label="Tidak"
+              className="p-button-text"
+              onClick={handleHideDialog}
+            />
+            <Button
+              label="Ya"
+              className="p-button-primary"
+              onClick={handleLoginRedirect}
+            />
+          </div>
+        }>
+        <p>Anda harus login untuk booking hotel. Apakah Anda ingin login sekarang?</p>
       </Dialog>
     </>
   );

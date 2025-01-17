@@ -27,8 +27,20 @@ export default function Navbar() {
     }
   };
 
+  const refreshPage = async () => {
+    const reloadCount = sessionStorage.getItem("reloadCount");
+    if (reloadCount < 2) {
+      sessionStorage.setItem("reloadCount", String(reloadCount + 1));
+      window.location.reload();
+    } else {
+      sessionStorage.removeItem("reloadCount");
+    }
+  };
+
   // Cek status login saat komponen dimuat
   useEffect(() => {
+    refreshPage();
+    
     const checkLoginStatus = async () => {
       const { data, error } = await supabase
         .from("hotel_login")
@@ -63,11 +75,10 @@ export default function Navbar() {
             <a
               className="login"
               href="/logout"
-              onClick={(e) => {
+              onClick={e => {
                 e.preventDefault(); // Mencegah navigasi ke /logout
                 handleLogout(); // Menangani logout
-              }}
-            >
+              }}>
               Logout
             </a>
           ) : (

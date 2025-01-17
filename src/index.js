@@ -5,6 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 
 import "./resources/css/main.css";
 import "./resources/css/components.css";
+import "./resources/css/override-primereact.css";
 import "primereact/resources/themes/lara-light-blue/theme.css";
 
 import Navbar from "./pages/layout/Navbar";

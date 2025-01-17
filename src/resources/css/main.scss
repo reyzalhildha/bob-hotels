@@ -4,7 +4,7 @@
   --primary-background: #000000;
   --text-black: #14213d;
   --text-yellow: #fca311;
-  --text-yellow-hover: #f09a0e;
+  --text-yellow-hover: #FE621D;
   --text-gray: #e5e5e5;
   --text-gray-hover: #dfdcdc;
   --text-white: #ffffff;
@@ -191,6 +191,7 @@ button, a {
   .hotel-list {
     gap: 1em;
     display: grid;
+    padding-bottom: 10em;
     grid-template-columns: repeat(1, 1fr);
 
     @media screen and (min-width: 1024px) {
@@ -201,6 +202,8 @@ button, a {
       border: 1px solid;
       border-color: var(--text-gray);
       @include standard-transition;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 
       &:hover {
         scale: 1.03;
@@ -213,6 +216,8 @@ button, a {
           width: 100%;
           height: 300px;
           object-fit: cover;
+          border-top-left-radius: 20px;
+          border-top-right-radius: 20px;
         }
       }
 
@@ -268,7 +273,7 @@ button, a {
           .booking {
             button {
               background-color: var(--text-yellow);
-              color: var(--text-black);
+              color: var(--text-white);
 
               &:hover {
                 background-color: var(--text-yellow-hover);
@@ -284,9 +289,9 @@ button, a {
 
               &:hover {
                 transition: color .02s;
-                color: var(--text-yellow);
+                color: var(--text-yellow-hover);
                 background-color: var(--text-white);
-                border: 1px solid var(--text-yellow);
+                border: 1px solid var(--text-yellow-hover);
               }
             }
           }
@@ -304,7 +309,15 @@ button, a {
 .container-login {
   gap: 2em;
   display: grid;
-  padding: 4em 30em;
+  padding: 4em 2em;
+
+  @media screen and (min-width: 1280px) {
+    padding: 4em 30em;
+  }
+
+  @media screen and (min-width: 768px) {
+    padding: 4em 15em;
+  }
 
   .form-group {
       gap: 2em;

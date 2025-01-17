@@ -2,7 +2,7 @@
   --primary-background: #000000;
   --text-black: #14213d;
   --text-yellow: #fca311;
-  --text-yellow-hover: #f09a0e;
+  --text-yellow-hover: #FE621D;
   --text-gray: #e5e5e5;
   --text-gray-hover: #dfdcdc;
   --text-white: #ffffff;
@@ -159,6 +159,7 @@ button:hover, a:hover {
 .hotels .hotel-list {
   gap: 1em;
   display: grid;
+  padding-bottom: 10em;
   grid-template-columns: repeat(1, 1fr);
 }
 @media screen and (min-width: 1024px) {
@@ -170,6 +171,8 @@ button:hover, a:hover {
   border: 1px solid;
   border-color: var(--text-gray);
   transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
 .hotels .hotel-list .card:hover {
   scale: 1.03;
@@ -181,6 +184,8 @@ button:hover, a:hover {
   height: 300px;
   -o-object-fit: cover;
      object-fit: cover;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 }
 .hotels .hotel-list .card .content-container {
   padding: 1em;
@@ -226,7 +231,7 @@ button:hover, a:hover {
 }
 .hotels .hotel-list .card .content-container .button .booking button {
   background-color: var(--text-yellow);
-  color: var(--text-black);
+  color: var(--text-white);
 }
 .hotels .hotel-list .card .content-container .button .booking button:hover {
   background-color: var(--text-yellow-hover);
@@ -238,15 +243,25 @@ button:hover, a:hover {
 }
 .hotels .hotel-list .card .content-container .button .detail button:hover {
   transition: color 0.02s;
-  color: var(--text-yellow);
+  color: var(--text-yellow-hover);
   background-color: var(--text-white);
-  border: 1px solid var(--text-yellow);
+  border: 1px solid var(--text-yellow-hover);
 }
 
 .container-login {
   gap: 2em;
   display: grid;
-  padding: 4em 30em;
+  padding: 4em 2em;
+}
+@media screen and (min-width: 1280px) {
+  .container-login {
+    padding: 4em 30em;
+  }
+}
+@media screen and (min-width: 768px) {
+  .container-login {
+    padding: 4em 15em;
+  }
 }
 .container-login .form-group {
   gap: 2em;

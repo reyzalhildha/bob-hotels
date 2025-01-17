@@ -39,7 +39,7 @@ export default function DialogDetail({ visible, onHide, hotelId }) {
   if (!hotelDetails) {
     return (
       <Dialog header="Loading..." visible={visible} onHide={onHide}>
-        Loading hotel details...
+        Loading...
       </Dialog>
     );
   }
